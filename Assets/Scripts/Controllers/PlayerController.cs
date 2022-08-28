@@ -9,6 +9,15 @@ public class PlayerController : CarController
     public float onBrakePotationSpeed;
     private float positionTranslateSpeed;
     private float rotationSpeed;
+    
+    public enum ControlMode
+    {
+        keyboard,
+        buttons
+    }
+
+    public ControlMode control;
+    
     private new void FixedUpdate()
     {
         HandleInput();
@@ -17,6 +26,8 @@ public class PlayerController : CarController
 
     private void Start()
     {
+        RaceManager.Instance.AddPlayer(this.gameObject);
+        
         positionTranslateSpeed = cameraFollow.positionTranslateSpeed;
         rotationSpeed = cameraFollow.rotationSpeed;
     }
@@ -35,10 +46,28 @@ public class PlayerController : CarController
         }
     }
 
+    public void VerticalInput(float input)
+    {
+        verticalInput = input;
+    }
+    public void HorizontalInput(float input)
+    {
+        horizontalInput = input;
+    }
+    public void Brake(bool input)
+    {
+        isBraking = input;
+    }
     void HandleInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        isBraking = Input.GetKey(KeyCode.Space);
+        if (control == ControlMode.keyboard)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            verticalInput = Input.GetAxis("Vertical");
+            isBraking = Input.GetKey(KeyCode.Space);
+        } else if (control == ControlMode.buttons)
+        {
+            
+        }
     }
 }

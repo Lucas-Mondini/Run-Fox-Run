@@ -19,38 +19,65 @@ public class RoadSpline :MonoBehaviour
     public int roadBlockXSize = 5;
     public int roadBlockZSize = 1;
     [SerializeField] private GameObject fencePrefab;
-
-    public void Start()
+    
+    private void Awake()
     {
-        List<GameObject> roadFloor = new List<GameObject>();
-        GameObject road = new GameObject();
-        road.name = "Road";
-        for (int i = 0; i < splineContainer.Spline.Count; i++)
-        {
-            BezierCurve curve = splineContainer.Spline.GetCurve(i); ;
-            List<GameObject> inPoint = new List<GameObject>();
-            for (int j = 0; j < resolution; j++) 
-            {
-                Vector3 point = GetPointInCurve(curve, (j / (float) resolution));
-                
-                GameObject roadMesh = new GameObject();
-                roadMesh.name = "roadMeshFloor";
-                roadMesh.transform.position =  point + gameObject.transform.position;
-                roadMesh.AddComponent<MeshGenerator>();
-                roadMesh.GetComponent<MeshGenerator>().xSize = roadBlockXSize;
-                roadMesh.GetComponent<MeshGenerator>().zSize = roadBlockZSize;
-                roadMesh.GetComponent<MeshRenderer>().material = roadMaterial;
-                roadMesh.transform.SetParent(road.transform);
-                
-
-                inPoint.Add(roadMesh);
-            }
-            foreach (var o in inPoint) 
-                roadFloor.Add(o);
-        }
-        SetFloorListInPosition(roadFloor);
+        DontDestroyOnLoad(gameObject);
     }
+    
+    public void OnValidate()
+    {
+        try
+        {
+            GameObject[] roadsToDestroy = GameObject.FindGameObjectsWithTag("Road");
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.delayCall+=()=>
+            {
+                foreach (var roadToDestroy in roadsToDestroy)
+                {
+                    DestroyImmediate(roadToDestroy);
+                }
+            };
+            #endif
+            
+            List<GameObject> roadFloor = new List<GameObject>();
+            GameObject road = new GameObject();
+            road.name = "Road";
+            road.tag = "Road";
+            
+            for (int i = 0; i < splineContainer.Spline.Count; i++)
+            {
+                BezierCurve curve = splineContainer.Spline.GetCurve(i);
+                ;
+                List<GameObject> inPoint = new List<GameObject>();
+                for (int j = 0; j < resolution; j++)
+                {
+                    Vector3 point = GetPointInCurve(curve, (j / (float)resolution));
 
+                    GameObject roadMesh = new GameObject();
+                    roadMesh.name = "roadMeshFloor";
+                    roadMesh.transform.position = point + gameObject.transform.position;
+                    roadMesh.AddComponent<MeshGenerator>();
+                    roadMesh.GetComponent<MeshGenerator>().xSize = roadBlockXSize;
+                    roadMesh.GetComponent<MeshGenerator>().zSize = roadBlockZSize;
+                    roadMesh.GetComponent<MeshRenderer>().material = roadMaterial;
+                    roadMesh.transform.SetParent(road.transform);
+
+
+                    inPoint.Add(roadMesh);
+                }
+
+                foreach (var o in inPoint)
+                    roadFloor.Add(o);
+            }
+
+            SetFloorListInPosition(roadFloor);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
     private Vector3 GetPointInCurve(BezierCurve curve, float t)
     {
         Vector3 P01 = Vector3.Lerp(curve.P0, curve.P1, t);
