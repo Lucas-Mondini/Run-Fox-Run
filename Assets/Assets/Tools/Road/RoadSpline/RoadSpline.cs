@@ -14,12 +14,17 @@ public class RoadSpline :MonoBehaviour
     private SplineContainer splineContainer;
 
     public bool reloadMeshes = false;
-
-    public int Roadwidth = 5;
+    
     public Material roadMaterial;
-    public int resolution = 500;
-    public int roadBlockXSize = 5;
-    public int roadBlockZSize = 1;
+    public int resolution = 50;
+    public int roadBlockXSize = 20;
+    public int roadBlockZSize = 20;
+    
+    public int fenceHeigth = 5;
+    public int fenceX = 10;
+    public int fenceZ = 10;
+    
+    
     [SerializeField] private GameObject fencePrefab;
     
     private void Awake()
@@ -107,24 +112,35 @@ public class RoadSpline :MonoBehaviour
     {
         GameObject L_fence = Instantiate(fencePrefab, road.transform, false);
         Vector3 rot = L_fence.transform.rotation.eulerAngles;
+        Vector3 scale =  L_fence.transform.localScale;
+
+        scale.z = fenceZ;
+        scale.x = fenceX;
+        scale.y = fenceHeigth;
+        
         rot.y += 90;
         L_fence.transform.rotation = Quaternion.Euler(rot);
+        L_fence.transform.localScale = scale;
 
         GameObject R_fence = Instantiate(fencePrefab, road.transform, false);
-        rot = L_fence.transform.rotation.eulerAngles;
-        rot.y -= 180;
-        R_fence.transform.rotation = Quaternion.Euler(rot);
-
         Vector3 pos = R_fence.transform.localPosition;
+        rot = L_fence.transform.rotation.eulerAngles;
+        pos = R_fence.transform.localPosition;
+        scale =  R_fence.transform.localScale;
+
+        rot.y -= 180;
+
         pos.z = roadBlockZSize;
         pos.x = 1;
-        R_fence.transform.localPosition = pos;
         
-        Vector3 scale =  R_fence.transform.localScale;
-        scale.z = -2;
+        scale.z = fenceZ;
+        scale.x = fenceX;
+        scale.y = fenceHeigth;
+        
+        R_fence.transform.rotation = Quaternion.Euler(rot);
+        R_fence.transform.localPosition = pos;
         R_fence.transform.localScale = scale;
-
-
+        
     }
     private void SetFloorInPosition(GameObject currentFloor, GameObject lastFloor)
     {
@@ -136,7 +152,6 @@ public class RoadSpline :MonoBehaviour
 
         Vector3 scale = currentFloor.transform.localScale;
         scale.x = Vector3.Distance(currentFloor.transform.position, lastFloor.transform.position);
-        scale.z = Roadwidth;
         currentFloor.transform.localScale = scale;
     }
 }
