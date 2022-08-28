@@ -13,6 +13,8 @@ public class RoadSpline :MonoBehaviour
     [SerializeField]
     private SplineContainer splineContainer;
 
+    public bool reloadMeshes = false;
+
     public int Roadwidth = 5;
     public Material roadMaterial;
     public int resolution = 500;
@@ -27,6 +29,8 @@ public class RoadSpline :MonoBehaviour
     
     public void OnValidate()
     {
+
+        reloadMeshes = false;
         try
         {
             GameObject[] roadsToDestroy = GameObject.FindGameObjectsWithTag("Road");

@@ -50,34 +50,22 @@ public class MeshGenerator : MonoBehaviour
 
     void CreateVertices()
     {
-        vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-        
-        for (int i = 0, z = 0; z < zSize + 1; z++)
-        for (int x = 0; x < xSize + 1; x++)
-            vertices[i++] = new Vector3(x * xWidth, 0, z * zWidth);
+        vertices = new Vector3[4];
+        vertices[0] = new Vector3(0, 0, zSize * zWidth);
+        vertices[1] = new Vector3(xSize * xWidth, 0, zSize * zWidth);
+        vertices[2] = new Vector3(0, 0, 0);
+        vertices[3] = new Vector3(zSize * xWidth, 0, 0);
     }
 
     void CreateTriangles()
     {
-        triangles = new int[xSize * zSize * 6];
-        int vert = 0;
-        int tris = 0;
-        for (int z = 0; z < zSize; z++)
-        {
-            for (int x = 0; x < xSize; x++)
-            {
-                triangles[tris + 0] = vert + 0;
-                triangles[tris + 1] = vert + xSize + 1;
-                triangles[tris + 2] = vert + 1;
-                triangles[tris + 3] = vert + 1;
-                triangles[tris + 4] = vert + xSize + 1;
-                triangles[tris + 5] = vert + xSize + 2;
-                vert++;
-                tris += 6;
-            }
-
-            vert++;
-        }
+        triangles = new int[6];
+        triangles[0] = 0;
+        triangles[1] = 1;
+        triangles[2] = 2;
+        triangles[3] = 2;
+        triangles[4] = 1;
+        triangles[5] = 3;
     }
 
     void UpdateMesh()
