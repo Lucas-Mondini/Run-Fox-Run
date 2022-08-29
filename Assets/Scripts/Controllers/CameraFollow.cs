@@ -1,13 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Image = UnityEngine.UI.Image;
 
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] private Vector3 offset;
     [SerializeField] private Transform target;
+    [SerializeField] private Image HealthBar;
     public float positionTranslateSpeed;
     public float rotationSpeed;
     private void Update()
@@ -16,9 +15,14 @@ public class CameraFollow : MonoBehaviour
         {
             HandlePosition();
             HandleRotation();
+            UpdateHealth();
         } catch (Exception e) {}
     }
-    
+
+    private void UpdateHealth()
+    {
+        HealthBar.fillAmount = target.parent.GetComponent<PlayerController>().Health / target.parent.GetComponent<PlayerController>().MaxHealth; 
+    }
     void HandlePosition()
     {
         Vector3 targetPos = target.TransformPoint(offset);
@@ -29,6 +33,5 @@ public class CameraFollow : MonoBehaviour
         Vector3 dir = target.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(dir, Vector3.up);
         transform.rotation = Quaternion.Lerp(rotation, rotation, rotationSpeed * Time.deltaTime);
-
     }
 }

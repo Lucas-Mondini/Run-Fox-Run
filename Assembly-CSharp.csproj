@@ -42,11 +42,13 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Assets\Tools\Road\RoadSpline\RoadSpline.cs" />
+     <Compile Include="Assets\Scripts\Controllers\CarCollider.cs" />
      <Compile Include="Assets\Scripts\Controllers\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Controllers\CarController.cs" />
      <Compile Include="Assets\Scripts\RaceManager.cs" />
      <Compile Include="Assets\Scripts\Tools\MeshGenerator.cs" />
+     <Compile Include="Assets\Assets\Tools\Road\RoadSpline\LapCounter\LapCounter.cs" />
      <Compile Include="Assets\Scripts\GameSettings.cs" />
      <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
      <Compile Include="Assets\Scripts\UI\SettingsMenu.cs" />

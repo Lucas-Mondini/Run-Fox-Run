@@ -11,6 +11,14 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 1500
       objectReference: {fileID: 0}
+    - target: {fileID: 2840630339425949967, guid: bb0d3a77516b31c4287621fdd0a91ae2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3126925047181461936, guid: bb0d3a77516b31c4287621fdd0a91ae2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3922505771202202395, guid: bb0d3a77516b31c4287621fdd0a91ae2, type: 3}
       propertyPath: m_Size.y
       value: 1.06
@@ -69,6 +77,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3748817586191465145, guid: bb0d3a77516b31c4287621fdd0a91ae2, type: 3}
+    - {fileID: 3126925047181461936, guid: bb0d3a77516b31c4287621fdd0a91ae2, type: 3}
+    - {fileID: 2840630339425949967, guid: bb0d3a77516b31c4287621fdd0a91ae2, type: 3}
+    - {fileID: 4493911988560600147, guid: bb0d3a77516b31c4287621fdd0a91ae2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bb0d3a77516b31c4287621fdd0a91ae2, type: 3}
 --- !u!1 &789816143423114736 stripped
 GameObject:
