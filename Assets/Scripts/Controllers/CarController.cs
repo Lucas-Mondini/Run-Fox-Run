@@ -45,12 +45,10 @@ public class CarController : MonoBehaviour
     public bool frontTraction;
     public bool rearTraction;
     
-    [SerializeField] protected float maxVelocity;
 
     private void Start()
     {
         this.health = MaxHealth;
-        transform.Find("Meshes").GetComponent<Rigidbody>().maxAngularVelocity = maxVelocity;
 
     }
 
